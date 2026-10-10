@@ -1,0 +1,17 @@
+variant,metric,n_graphs,baseline,variant_value,diff,ci95_low,ci95_high,mcnemar_p
+"Dir-GNNCert (Dir-GIN, directed LDP-10)",clean_acc,84,0.7976,0.8333,0.0357,-0.0238,0.0952,0.4531
+"Dir-GNNCert (Dir-GIN, directed LDP-10)",cert@0,84,0.7976,0.8333,0.0357,-0.0238,0.0952,0.4531
+"Dir-GNNCert (Dir-GIN, directed LDP-10)",cert@1,84,0.7976,0.8333,0.0357,-0.0238,0.0952,0.4531
+"Dir-GNNCert (Dir-GIN, directed LDP-10)",cert@2,84,0.7976,0.8333,0.0357,-0.0238,0.0952,0.4531
+"Dir-GNNCert (Dir-GIN, directed LDP-10)",cert@5,84,0.7976,0.8333,0.0357,-0.0238,0.0952,0.4531
+"Dir-GNNCert (Dir-GIN, directed LDP-10)",cert@10,84,0.7976,0.8214,0.0238,-0.0357,0.0952,0.7266
+"Dir-GNNCert (Dir-GIN, directed LDP-10)",cert@14,84,0.75,0.8095,0.0595,-0.0119,0.1429,0.2266
+"Dir-GNNCert (Dir-GIN, directed LDP-10)",mean_cert_size,84,11.881,12.381,0.5,-0.4167,1.4643,
+"Dir-GNNCert (Dir-GIN, LDP-5)",clean_acc,84,0.7976,0.869,0.0714,0.0238,0.131,0.0312
+"Dir-GNNCert (Dir-GIN, LDP-5)",cert@0,84,0.7976,0.869,0.0714,0.0238,0.131,0.0312
+"Dir-GNNCert (Dir-GIN, LDP-5)",cert@1,84,0.7976,0.869,0.0714,0.0238,0.131,0.0312
+"Dir-GNNCert (Dir-GIN, LDP-5)",cert@2,84,0.7976,0.869,0.0714,0.0238,0.131,0.0312
+"Dir-GNNCert (Dir-GIN, LDP-5)",cert@5,84,0.7976,0.869,0.0714,0.0238,0.131,0.0312
+"Dir-GNNCert (Dir-GIN, LDP-5)",cert@10,84,0.7976,0.8571,0.0595,0.0,0.119,0.125
+"Dir-GNNCert (Dir-GIN, LDP-5)",cert@14,84,0.75,0.8333,0.0833,0.0238,0.1429,0.0156
+"Dir-GNNCert (Dir-GIN, LDP-5)",mean_cert_size,84,11.881,12.9524,1.0714,0.3214,1.9762,

@@ -181,7 +181,7 @@ def main():
     best = 0
     for epoch in tqdm(range(1, args.epochs + 1)):
         avg_loss = train(args, model, device, train_graphs, optimizer, epoch, criterion, model_time)
-        if epoch % 2 == 0:
+        if epoch % int(__import__('os').environ.get('EVAL_EVERY', '2')) == 0:  # EVALPATCH
             acc_train, acc_test = test(args, model, device, train_graphs, test_graphs)
             if acc_test>best:
                 best = acc_test

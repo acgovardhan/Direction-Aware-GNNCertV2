@@ -1,0 +1,5 @@
+| variant | clean_acc | cert@0 | cert@1 | cert@2 | cert@5 | cert@10 | cert@14 | mean_cert_size | #runs |
+|---|---|---|---|---|---|---|---|---|---|
+| GNNCert (undirected, LDP-5)  [baseline] | 0.7976 | 0.7976 | 0.7976 | 0.7976 | 0.7976 | 0.7976 | 0.7500 | 11.8810 | 1 |
+| Dir-GNNCert (Dir-GIN, directed LDP-10) | 0.8333 | 0.8333 | 0.8333 | 0.8333 | 0.8333 | 0.8214 | 0.8095 | 12.3810 | 1 |
+| Dir-GNNCert (Dir-GIN, LDP-5) | 0.8690 | 0.8690 | 0.8690 | 0.8690 | 0.8690 | 0.8571 | 0.8333 | 12.9524 | 1 |

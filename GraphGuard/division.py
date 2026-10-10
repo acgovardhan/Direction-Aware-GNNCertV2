@@ -157,6 +157,7 @@ def graph_feature_division(graph, args):
     subgraphs = []
     for i in range(args.num_group):
         subgraph = copy(graph)
+        subgraph.node_features = graph.node_features.clone()  # DIVFIX
         subgraph.node_features[group!=i] = DEFAULT
         subgraphs.append(subgraph)
     return subgraphs
@@ -225,6 +226,7 @@ def graph_feature_structure_division(graph, args):
     for graph in graphs:
         for i in range(args.num_group):
             subgraph = copy(graph)
+            subgraph.node_features = graph.node_features.clone()  # DIVFIX2
             subgraph.node_features[group != i] = DEFAULT
             subgraphs.append(subgraph)
     

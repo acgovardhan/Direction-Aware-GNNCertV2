@@ -1,0 +1,255 @@
+(venv) PS C:\Users\Govardhan\Projects\gnn_dead\GNNCERT> cd GraphGuard
+(venv) PS C:\Users\Govardhan\Projects\gnn_dead\GNNCERT\GraphGuard> python dir_selftest.py
+Dir-GIN   logits differ between G and reversed G : True
+orig GIN  logits identical for G and reversed G   : True
+structure division partitions the edge set (directed: 4 edges, undirected: 2 edges)  OK
+self-test passed
+(venv) PS C:\Users\Govardhan\Projects\gnn_dead\GNNCERT\GraphGuard> python prepare_malnet_directed.py
+wrote dataset\MALNET_DIR\MALNET_DIR.txt  (250 graphs)
+VERIFIED: node counts, undirected edge sets and LDP features are identical to MALNET_LDP
+share of directed edges that also exist in the reverse direction (reciprocity):
+   downloader   mean 0.000
+   trojan       mean 0.000
+   addisplay    mean 0.000
+   adware       mean 0.000
+   benign       mean 0.000
+   overall      mean 0.000   (near 0 => direction carries information)
+(venv) PS C:\Users\Govardhan\Projects\gnn_dead\GNNCERT\GraphGuard> cd ..
+(venv) PS C:\Users\Govardhan\Projects\gnn_dead\GNNCERT> & "C:\Program Files\Git\bin\bash.exe" -c 'EPOCHS_FEATURE=100 EPOCHS_STRUCTURE=100 EPOCHS_ALL=100 bash jobs/directed_ablation.sh'
+=== variant A (undirected, ldp5) | division=feature NG=30 epochs=100 | seed=42 fold=0 ===
+[undirected_ldp5] MALNET_DIR division=feature NG=30 | graphs=250 train=166 test=84 val=0 classes=5 feat_dim=5 device=cpu
+parameters: 31862
+C:\Users\Govardhan\Projects\gnn_dead\GNNCERT\GraphGuard\models\graphcnn.py:133: UserWarning: torch.sparse.SparseTensor(indices, values, shape, *, device=) is deprecated.  Please use torch.sparse_coo_tensor(indices, values, shape, dtype=, device=). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\builder\windows\pytorch\torch\csrc\utils\tensor_new.cpp:653.)
+  graph_pool = torch.sparse.FloatTensor(idx, elem, torch.Size([len(batch_graph), start_idx[-1]]))
+epoch    10 loss 17.3296 test_view_acc 0.6055555555555555 val_view_acc
+epoch    20 loss 10.3546 test_view_acc 0.8126984126984127 val_view_acc
+epoch    30 loss 19.0072 test_view_acc 0.5198412698412699 val_view_acc
+epoch    40 loss 7.6712 test_view_acc 0.8551587301587301 val_view_acc
+epoch    50 loss 11.5284 test_view_acc 0.6833333333333333 val_view_acc
+epoch    60 loss 7.6391 test_view_acc 0.7857142857142857 val_view_acc
+epoch    70 loss 14.8186 test_view_acc 0.5642857142857143 val_view_acc
+epoch    80 loss 7.6283 test_view_acc 0.8214285714285714 val_view_acc
+epoch    90 loss 6.3501 test_view_acc 0.861904761904762 val_view_acc
+epoch   100 loss 14.1213 test_view_acc 0.7972222222222223 val_view_acc
+certified accuracy @ size 0,1,2,...: [0.8095, 0.8095, 0.7976, 0.7976, 0.7976, 0.7976, 0.7976, 0.7976, 0.7619, 0.7619, 0.7619, 0.75, 0.75, 0.7262, 0.6786, 0.2024]
+clean accuracy (majority vote over 30 subgraphs): 0.8095  -> saved to dir_results\undirected_ldp5\MALNET_DIR_feature_NG30_E100_S42_F0
+=== variant B (directed, ldp5) | division=feature NG=30 epochs=100 | seed=42 fold=0 ===
+[directed_ldp5] MALNET_DIR division=feature NG=30 | graphs=250 train=166 test=84 val=0 classes=5 feat_dim=5 device=cpu
+parameters: 57074
+epoch    10 loss 12.9010 test_view_acc 0.7849206349206349 val_view_acc
+epoch    20 loss 8.4771 test_view_acc 0.801984126984127 val_view_acc
+epoch    30 loss 8.7748 test_view_acc 0.9087301587301587 val_view_acc
+epoch    40 loss 14.0732 test_view_acc 0.8738095238095238 val_view_acc
+epoch    50 loss 9.1924 test_view_acc 0.9115079365079365 val_view_acc
+epoch    60 loss 7.5093 test_view_acc 0.9325396825396826 val_view_acc
+epoch    70 loss 3.3310 test_view_acc 0.9408730158730159 val_view_acc
+epoch    80 loss 9.8831 test_view_acc 0.8904761904761904 val_view_acc
+epoch    90 loss 7.7503 test_view_acc 0.9115079365079365 val_view_acc
+epoch   100 loss 5.1654 test_view_acc 0.9380952380952381 val_view_acc
+certified accuracy @ size 0,1,2,...: [0.9405, 0.9405, 0.9405, 0.9405, 0.9405, 0.9405, 0.9405, 0.9405, 0.9405, 0.9405, 0.9405, 0.9405, 0.9405, 0.9167, 0.9167, 0.2024]
+clean accuracy (majority vote over 30 subgraphs): 0.9405  -> saved to dir_results\directed_ldp5\MALNET_DIR_feature_NG30_E100_S42_F0
+=== variant C (directed, dldp) | division=feature NG=30 epochs=100 | seed=42 fold=0 ===
+[directed_dldp] MALNET_DIR division=feature NG=30 | graphs=250 train=166 test=84 val=0 classes=5 feat_dim=10 device=cpu
+parameters: 58059
+epoch    10 loss 26.7060 test_view_acc 0.7511904761904762 val_view_acc
+epoch    20 loss 19.0762 test_view_acc 0.7170634920634921 val_view_acc
+epoch    30 loss 13.6244 test_view_acc 0.8138888888888889 val_view_acc
+epoch    40 loss 19.0433 test_view_acc 0.8075396825396826 val_view_acc
+epoch    50 loss 13.3553 test_view_acc 0.9079365079365079 val_view_acc
+epoch    60 loss 8.1175 test_view_acc 0.9365079365079365 val_view_acc
+epoch    70 loss 23.3438 test_view_acc 0.930952380952381 val_view_acc
+epoch    80 loss 10.6878 test_view_acc 0.9103174603174603 val_view_acc
+epoch    90 loss 14.2460 test_view_acc 0.8202380952380952 val_view_acc
+epoch   100 loss 21.4711 test_view_acc 0.8944444444444445 val_view_acc
+certified accuracy @ size 0,1,2,...: [0.9048, 0.8929, 0.8929, 0.8929, 0.8929, 0.8929, 0.8929, 0.8929, 0.8929, 0.8929, 0.8929, 0.869, 0.869, 0.8571, 0.8333, 0.2024]
+clean accuracy (majority vote over 30 subgraphs): 0.9048  -> saved to dir_results\directed_dldp\MALNET_DIR_feature_NG30_E100_S42_F0
+=== variant A (undirected, ldp5) | division=structure NG=30 epochs=100 | seed=42 fold=0 ===
+[undirected_ldp5] MALNET_DIR division=structure NG=30 | graphs=250 train=166 test=84 val=0 classes=5 feat_dim=5 device=cpu
+parameters: 31862
+C:\Users\Govardhan\Projects\gnn_dead\GNNCERT\GraphGuard\models\graphcnn.py:133: UserWarning: torch.sparse.SparseTensor(indices, values, shape, *, device=) is deprecated.  Please use torch.sparse_coo_tensor(indices, values, shape, dtype=, device=). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\builder\windows\pytorch\torch\csrc\utils\tensor_new.cpp:653.)
+  graph_pool = torch.sparse.FloatTensor(idx, elem, torch.Size([len(batch_graph), start_idx[-1]]))
+epoch    10 loss 10.2050 test_view_acc 0.7817460317460317 val_view_acc
+epoch    20 loss 6.2327 test_view_acc 0.803968253968254 val_view_acc
+epoch    30 loss 3.9252 test_view_acc 0.8115079365079365 val_view_acc
+epoch    40 loss 2.2050 test_view_acc 0.8531746031746031 val_view_acc
+epoch    50 loss 2.1720 test_view_acc 0.8785714285714286 val_view_acc
+epoch    60 loss 1.7455 test_view_acc 0.8432539682539683 val_view_acc
+epoch    70 loss 1.0988 test_view_acc 0.8539682539682539 val_view_acc
+epoch    80 loss 1.4712 test_view_acc 0.8476190476190476 val_view_acc
+epoch    90 loss 1.0934 test_view_acc 0.6912698412698413 val_view_acc
+epoch   100 loss 2.5258 test_view_acc 0.8150793650793651 val_view_acc
+certified accuracy @ size 0,1,2,...: [0.7976, 0.7976, 0.7976, 0.7976, 0.7976, 0.7976, 0.7976, 0.7976, 0.7976, 0.7976, 0.7976, 0.7857, 0.7857, 0.7857, 0.75, 0.2024]
+clean accuracy (majority vote over 30 subgraphs): 0.7976  -> saved to dir_results\undirected_ldp5\MALNET_DIR_structure_NG30_E100_S42_F0
+=== variant B (directed, ldp5) | division=structure NG=30 epochs=100 | seed=42 fold=0 ===
+[directed_ldp5] MALNET_DIR division=structure NG=30 | graphs=250 train=166 test=84 val=0 classes=5 feat_dim=5 device=cpu
+parameters: 57074
+epoch    10 loss 8.0995 test_view_acc 0.8285714285714286 val_view_acc
+epoch    20 loss 4.4258 test_view_acc 0.8325396825396826 val_view_acc
+epoch    30 loss 4.8541 test_view_acc 0.7876984126984127 val_view_acc
+epoch    40 loss 2.3022 test_view_acc 0.8575396825396825 val_view_acc
+epoch    50 loss 2.6603 test_view_acc 0.8623015873015873 val_view_acc
+epoch    60 loss 2.6421 test_view_acc 0.859920634920635 val_view_acc
+epoch    70 loss 1.0395 test_view_acc 0.8607142857142858 val_view_acc
+epoch    80 loss 1.1519 test_view_acc 0.8075396825396826 val_view_acc
+epoch    90 loss 1.3429 test_view_acc 0.8095238095238095 val_view_acc
+epoch   100 loss 1.7757 test_view_acc 0.8742063492063492 val_view_acc
+certified accuracy @ size 0,1,2,...: [0.869, 0.869, 0.869, 0.869, 0.869, 0.869, 0.869, 0.869, 0.869, 0.869, 0.8571, 0.8571, 0.8571, 0.8571, 0.8333, 0.2024]
+clean accuracy (majority vote over 30 subgraphs): 0.8690  -> saved to dir_results\directed_ldp5\MALNET_DIR_structure_NG30_E100_S42_F0
+=== variant C (directed, dldp) | division=structure NG=30 epochs=100 | seed=42 fold=0 ===
+[directed_dldp] MALNET_DIR division=structure NG=30 | graphs=250 train=166 test=84 val=0 classes=5 feat_dim=10 device=cpu
+parameters: 58059
+epoch    10 loss 3.3930 test_view_acc 0.8091269841269841 val_view_acc
+epoch    20 loss 1.4416 test_view_acc 0.7694444444444445 val_view_acc
+epoch    30 loss 1.2915 test_view_acc 0.8253968253968254 val_view_acc
+epoch    40 loss 0.5224 test_view_acc 0.8630952380952381 val_view_acc
+epoch    50 loss 1.2114 test_view_acc 0.8067460317460318 val_view_acc
+epoch    60 loss 0.6106 test_view_acc 0.794047619047619 val_view_acc
+epoch    70 loss 0.1993 test_view_acc 0.8507936507936508 val_view_acc
+epoch    80 loss 0.5431 test_view_acc 0.8297619047619048 val_view_acc
+epoch    90 loss 0.3462 test_view_acc 0.8432539682539683 val_view_acc
+epoch   100 loss 0.2986 test_view_acc 0.8507936507936508 val_view_acc
+certified accuracy @ size 0,1,2,...: [0.8333, 0.8333, 0.8333, 0.8333, 0.8333, 0.8333, 0.8333, 0.8214, 0.8214, 0.8214, 0.8214, 0.8214, 0.8214, 0.8095, 0.8095, 0.2024]
+clean accuracy (majority vote over 30 subgraphs): 0.8333  -> saved to dir_results\directed_dldp\MALNET_DIR_structure_NG30_E100_S42_F0
+=== variant A (undirected, ldp5) | division=all NG=10 epochs=100 | seed=42 fold=0 ===
+[undirected_ldp5] MALNET_DIR division=all NG=10 | graphs=250 train=166 test=84 val=0 classes=5 feat_dim=5 device=cpu
+parameters: 31862
+C:\Users\Govardhan\Projects\gnn_dead\GNNCERT\GraphGuard\models\graphcnn.py:133: UserWarning: torch.sparse.SparseTensor(indices, values, shape, *, device=) is deprecated.  Please use torch.sparse_coo_tensor(indices, values, shape, dtype=, device=). (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\builder\windows\pytorch\torch\csrc\utils\tensor_new.cpp:653.)
+  graph_pool = torch.sparse.FloatTensor(idx, elem, torch.Size([len(batch_graph), start_idx[-1]]))
+epoch    10 loss 29.9989 test_view_acc 0.22523809523809524 val_view_acc
+epoch    20 loss 40.2181 test_view_acc 0.3036904761904762 val_view_acc
+epoch    30 loss 30.6604 test_view_acc 0.37476190476190474 val_view_acc
+epoch    40 loss 26.9522 test_view_acc 0.32857142857142857 val_view_acc
+epoch    50 loss 33.5188 test_view_acc 0.4657142857142857 val_view_acc
+epoch    60 loss 32.4452 test_view_acc 0.2179761904761905 val_view_acc
+epoch    70 loss 24.8363 test_view_acc 0.25142857142857145 val_view_acc
+epoch    80 loss 32.2346 test_view_acc 0.33214285714285713 val_view_acc
+epoch    90 loss 32.4133 test_view_acc 0.3905952380952381 val_view_acc
+epoch   100 loss 25.4759 test_view_acc 0.2810714285714286 val_view_acc
+certified accuracy matrix (rows = #feature perturbations, cols = #edge perturbations):
+[[0.2262 0.2024 0.2024 0.2024 0.2024 0.     0.    ]
+ [0.2024 0.2024 0.2024 0.2024 0.1905 0.     0.    ]
+ [0.2024 0.2024 0.2024 0.1905 0.     0.     0.    ]
+ [0.2024 0.2024 0.1905 0.     0.     0.     0.    ]
+ [0.2024 0.1905 0.     0.     0.     0.     0.    ]
+ [0.     0.     0.     0.     0.     0.     0.    ]
+ [0.     0.     0.     0.     0.     0.     0.    ]]
+clean accuracy (majority vote over 100 subgraphs): 0.2262  -> saved to dir_results\undirected_ldp5\MALNET_DIR_all_NG10_E100_S42_F0
+=== variant B (directed, ldp5) | division=all NG=10 epochs=100 | seed=42 fold=0 ===
+[directed_ldp5] MALNET_DIR division=all NG=10 | graphs=250 train=166 test=84 val=0 classes=5 feat_dim=5 device=cpu
+parameters: 57074
+epoch    10 loss 27.5101 test_view_acc 0.36892857142857144 val_view_acc
+epoch    20 loss 31.6037 test_view_acc 0.4185714285714286 val_view_acc
+epoch    30 loss 25.4174 test_view_acc 0.4076190476190476 val_view_acc
+epoch    40 loss 16.1475 test_view_acc 0.38357142857142856 val_view_acc
+epoch    50 loss 24.6912 test_view_acc 0.39785714285714285 val_view_acc
+epoch    60 loss 16.4524 test_view_acc 0.3711904761904762 val_view_acc
+epoch    70 loss 28.4494 test_view_acc 0.41404761904761905 val_view_acc
+epoch    80 loss 18.4490 test_view_acc 0.5201190476190476 val_view_acc
+epoch    90 loss 34.5998 test_view_acc 0.3886904761904762 val_view_acc
+epoch   100 loss 23.0556 test_view_acc 0.5067857142857143 val_view_acc
+certified accuracy matrix (rows = #feature perturbations, cols = #edge perturbations):
+[[0.4881 0.4167 0.3571 0.3214 0.2024 0.     0.    ]
+ [0.4167 0.369  0.3214 0.2262 0.1905 0.     0.    ]
+ [0.3571 0.3214 0.25   0.1905 0.     0.     0.    ]
+ [0.3214 0.2262 0.1905 0.     0.     0.     0.    ]
+ [0.2024 0.1905 0.     0.     0.     0.     0.    ]
+ [0.     0.     0.     0.     0.     0.     0.    ]
+ [0.     0.     0.     0.     0.     0.     0.    ]]
+clean accuracy (majority vote over 100 subgraphs): 0.4881  -> saved to dir_results\directed_ldp5\MALNET_DIR_all_NG10_E100_S42_F0
+=== variant C (directed, dldp) | division=all NG=10 epochs=100 | seed=42 fold=0 ===
+[directed_dldp] MALNET_DIR division=all NG=10 | graphs=250 train=166 test=84 val=0 classes=5 feat_dim=10 device=cpu
+parameters: 58059
+epoch    10 loss 35.7676 test_view_acc 0.3942857142857143 val_view_acc
+epoch    20 loss 52.7876 test_view_acc 0.4101190476190476 val_view_acc
+epoch    30 loss 54.4391 test_view_acc 0.4479761904761905 val_view_acc
+epoch    40 loss 32.8958 test_view_acc 0.37357142857142855 val_view_acc
+epoch    50 loss 46.0934 test_view_acc 0.3902380952380952 val_view_acc
+epoch    60 loss 37.0854 test_view_acc 0.5025 val_view_acc
+epoch    70 loss 41.3625 test_view_acc 0.46154761904761904 val_view_acc
+epoch    80 loss 68.6454 test_view_acc 0.36773809523809525 val_view_acc
+epoch    90 loss 38.2144 test_view_acc 0.5488095238095239 val_view_acc
+epoch   100 loss 36.0841 test_view_acc 0.5111904761904762 val_view_acc
+certified accuracy matrix (rows = #feature perturbations, cols = #edge perturbations):
+[[0.5595 0.5    0.4286 0.3095 0.1667 0.     0.    ]
+ [0.5    0.4643 0.3214 0.25   0.131  0.     0.    ]
+ [0.4286 0.3214 0.25   0.131  0.     0.     0.    ]
+ [0.3095 0.25   0.131  0.     0.     0.     0.    ]
+ [0.1667 0.131  0.     0.     0.     0.     0.    ]
+ [0.     0.     0.     0.     0.     0.     0.    ]
+ [0.     0.     0.     0.     0.     0.     0.    ]]
+clean accuracy (majority vote over 100 subgraphs): 0.5595  -> saved to dir_results\directed_dldp\MALNET_DIR_all_NG10_E100_S42_F0
+
+=== MALNET_DIR  division=all  NG=10  epochs=100   variants: ['undirected_ldp5', 'directed_dldp', 'directed_ldp5']
+| variant | clean_acc | cert(f=0,e=0) | cert(f=1,e=0) | cert(f=0,e=1) | cert(f=1,e=1) | #runs |
+|---|---|---|---|---|---|---|
+| GNNCert (undirected, LDP-5)  [baseline] | 0.2262 | 0.2262 | 0.2024 | 0.2024 | 0.2024 | 1 |
+| Dir-GNNCert (Dir-GIN, directed LDP-10) | 0.5595 | 0.5595 | 0.5000 | 0.5000 | 0.4643 | 1 |
+| Dir-GNNCert (Dir-GIN, LDP-5) | 0.4881 | 0.4881 | 0.4167 | 0.4167 | 0.3690 | 1 |
+
+paired comparison vs baseline (diff = variant - baseline, 95% bootstrap CI over test graphs):
+                               variant        metric  n_graphs  baseline  variant_value   diff  ci95_low  ci95_high  mcnemar_p
+Dir-GNNCert (Dir-GIN, directed LDP-10)     clean_acc        84    0.2262         0.5595 0.3333    0.2262     0.4405     0.0000
+Dir-GNNCert (Dir-GIN, directed LDP-10) cert(f=0,e=0)        84    0.2262         0.5595 0.3333    0.2262     0.4524     0.0000
+Dir-GNNCert (Dir-GIN, directed LDP-10) cert(f=1,e=0)        84    0.2024         0.5000 0.2976    0.2024     0.4048     0.0000
+Dir-GNNCert (Dir-GIN, directed LDP-10) cert(f=0,e=1)        84    0.2024         0.5000 0.2976    0.2024     0.4048     0.0000
+Dir-GNNCert (Dir-GIN, directed LDP-10) cert(f=1,e=1)        84    0.2024         0.4643 0.2619    0.1548     0.3690     0.0000
+          Dir-GNNCert (Dir-GIN, LDP-5)     clean_acc        84    0.2262         0.4881 0.2619    0.1667     0.3571     0.0000
+          Dir-GNNCert (Dir-GIN, LDP-5) cert(f=0,e=0)        84    0.2262         0.4881 0.2619    0.1667     0.3571     0.0000
+          Dir-GNNCert (Dir-GIN, LDP-5) cert(f=1,e=0)        84    0.2024         0.4167 0.2143    0.1310     0.2976     0.0000
+          Dir-GNNCert (Dir-GIN, LDP-5) cert(f=0,e=1)        84    0.2024         0.4167 0.2143    0.1310     0.3095     0.0000
+          Dir-GNNCert (Dir-GIN, LDP-5) cert(f=1,e=1)        84    0.2024         0.3690 0.1667    0.0952     0.2500     0.0001
+
+=== MALNET_DIR  division=feature  NG=30  epochs=100   variants: ['undirected_ldp5', 'directed_dldp', 'directed_ldp5']
+| variant | clean_acc | cert@0 | cert@1 | cert@2 | cert@5 | cert@10 | cert@14 | mean_cert_size | #runs |
+|---|---|---|---|---|---|---|---|---|---|
+| GNNCert (undirected, LDP-5)  [baseline] | 0.8095 | 0.8095 | 0.8095 | 0.7976 | 0.7976 | 0.7619 | 0.6786 | 11.5952 | 1 |
+| Dir-GNNCert (Dir-GIN, directed LDP-10) | 0.9048 | 0.9048 | 0.8929 | 0.8929 | 0.8929 | 0.8929 | 0.8333 | 13.2619 | 1 |
+| Dir-GNNCert (Dir-GIN, LDP-5) | 0.9405 | 0.9405 | 0.9405 | 0.9405 | 0.9405 | 0.9405 | 0.9167 | 14.0595 | 1 |
+
+paired comparison vs baseline (diff = variant - baseline, 95% bootstrap CI over test graphs):
+                               variant         metric  n_graphs  baseline  variant_value   diff  ci95_low  ci95_high  mcnemar_p
+Dir-GNNCert (Dir-GIN, directed LDP-10)      clean_acc        84    0.8095         0.9048 0.0952    0.0238     0.1786     0.0386
+Dir-GNNCert (Dir-GIN, directed LDP-10)         cert@0        84    0.8095         0.9048 0.0952    0.0238     0.1786     0.0386
+Dir-GNNCert (Dir-GIN, directed LDP-10)         cert@1        84    0.8095         0.8929 0.0833    0.0000     0.1667     0.0923
+Dir-GNNCert (Dir-GIN, directed LDP-10)         cert@2        84    0.7976         0.8929 0.0952    0.0119     0.1786     0.0574
+Dir-GNNCert (Dir-GIN, directed LDP-10)         cert@5        84    0.7976         0.8929 0.0952    0.0119     0.1786     0.0574
+Dir-GNNCert (Dir-GIN, directed LDP-10)        cert@10        84    0.7619         0.8929 0.1310    0.0476     0.2262     0.0127
+Dir-GNNCert (Dir-GIN, directed LDP-10)        cert@14        84    0.6786         0.8333 0.1548    0.0714     0.2500     0.0023
+Dir-GNNCert (Dir-GIN, directed LDP-10) mean_cert_size        84   11.5952        13.2619 1.6667    0.4762     2.9167        NaN
+          Dir-GNNCert (Dir-GIN, LDP-5)      clean_acc        84    0.8095         0.9405 0.1310    0.0595     0.2024     0.0010
+          Dir-GNNCert (Dir-GIN, LDP-5)         cert@0        84    0.8095         0.9405 0.1310    0.0595     0.2024     0.0010
+          Dir-GNNCert (Dir-GIN, LDP-5)         cert@1        84    0.8095         0.9405 0.1310    0.0595     0.2024     0.0010
+          Dir-GNNCert (Dir-GIN, LDP-5)         cert@2        84    0.7976         0.9405 0.1429    0.0714     0.2262     0.0005
+          Dir-GNNCert (Dir-GIN, LDP-5)         cert@5        84    0.7976         0.9405 0.1429    0.0714     0.2143     0.0005
+          Dir-GNNCert (Dir-GIN, LDP-5)        cert@10        84    0.7619         0.9405 0.1786    0.1071     0.2619     0.0001
+          Dir-GNNCert (Dir-GIN, LDP-5)        cert@14        84    0.6786         0.9167 0.2381    0.1548     0.3333     0.0000
+          Dir-GNNCert (Dir-GIN, LDP-5) mean_cert_size        84   11.5952        14.0595 2.4643    1.4405     3.6429        NaN
+
+=== MALNET_DIR  division=structure  NG=30  epochs=100   variants: ['undirected_ldp5', 'directed_dldp', 'directed_ldp5']
+| variant | clean_acc | cert@0 | cert@1 | cert@2 | cert@5 | cert@10 | cert@14 | mean_cert_size | #runs |
+|---|---|---|---|---|---|---|---|---|---|
+| GNNCert (undirected, LDP-5)  [baseline] | 0.7976 | 0.7976 | 0.7976 | 0.7976 | 0.7976 | 0.7976 | 0.7500 | 11.8810 | 1 |
+| Dir-GNNCert (Dir-GIN, directed LDP-10) | 0.8333 | 0.8333 | 0.8333 | 0.8333 | 0.8333 | 0.8214 | 0.8095 | 12.3810 | 1 |
+| Dir-GNNCert (Dir-GIN, LDP-5) | 0.8690 | 0.8690 | 0.8690 | 0.8690 | 0.8690 | 0.8571 | 0.8333 | 12.9524 | 1 |
+
+paired comparison vs baseline (diff = variant - baseline, 95% bootstrap CI over test graphs):
+                               variant         metric  n_graphs  baseline  variant_value   diff  ci95_low  ci95_high  mcnemar_p
+Dir-GNNCert (Dir-GIN, directed LDP-10)      clean_acc        84    0.7976         0.8333 0.0357   -0.0238     0.0952     0.4531
+Dir-GNNCert (Dir-GIN, directed LDP-10)         cert@0        84    0.7976         0.8333 0.0357   -0.0238     0.0952     0.4531
+Dir-GNNCert (Dir-GIN, directed LDP-10)         cert@1        84    0.7976         0.8333 0.0357   -0.0238     0.0952     0.4531
+Dir-GNNCert (Dir-GIN, directed LDP-10)         cert@2        84    0.7976         0.8333 0.0357   -0.0238     0.0952     0.4531
+Dir-GNNCert (Dir-GIN, directed LDP-10)         cert@5        84    0.7976         0.8333 0.0357   -0.0238     0.0952     0.4531
+Dir-GNNCert (Dir-GIN, directed LDP-10)        cert@10        84    0.7976         0.8214 0.0238   -0.0357     0.0952     0.7266
+Dir-GNNCert (Dir-GIN, directed LDP-10)        cert@14        84    0.7500         0.8095 0.0595   -0.0119     0.1429     0.2266
+Dir-GNNCert (Dir-GIN, directed LDP-10) mean_cert_size        84   11.8810        12.3810 0.5000   -0.4167     1.4643        NaN
+          Dir-GNNCert (Dir-GIN, LDP-5)      clean_acc        84    0.7976         0.8690 0.0714    0.0238     0.1310     0.0312
+          Dir-GNNCert (Dir-GIN, LDP-5)         cert@0        84    0.7976         0.8690 0.0714    0.0238     0.1310     0.0312
+          Dir-GNNCert (Dir-GIN, LDP-5)         cert@1        84    0.7976         0.8690 0.0714    0.0238     0.1310     0.0312
+          Dir-GNNCert (Dir-GIN, LDP-5)         cert@2        84    0.7976         0.8690 0.0714    0.0238     0.1310     0.0312
+          Dir-GNNCert (Dir-GIN, LDP-5)         cert@5        84    0.7976         0.8690 0.0714    0.0238     0.1310     0.0312
+          Dir-GNNCert (Dir-GIN, LDP-5)        cert@10        84    0.7976         0.8571 0.0595    0.0000     0.1190     0.1250
+          Dir-GNNCert (Dir-GIN, LDP-5)        cert@14        84    0.7500         0.8333 0.0833    0.0238     0.1429     0.0156
+          Dir-GNNCert (Dir-GIN, LDP-5) mean_cert_size        84   11.8810        12.9524 1.0714    0.3214     1.9762        NaN
+
+all outputs in dir_results\comparison/
+(venv) PS C:\Users\Govardhan\Projects\gnn_dead\GNNCERT>

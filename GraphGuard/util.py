@@ -70,8 +70,10 @@ class GCN(torch.nn.Module):
         return F.log_softmax(x, dim=1)
         
 def get_time():
-    torch.cuda.synchronize()
+    if torch.cuda.is_available():
+        torch.cuda.synchronize()
     return time.time()
+
 
 class S2VGraph(object):
     def __init__(self, g, label, node_tags=None, node_features=None):
@@ -260,6 +262,9 @@ def load_data(dataset, degree_as_tag):
     return g_list, len(label_dict), tag2index
 
 def load_dataset(dataset, degree_as_tag):
+    if dataset.upper().startswith('MALNET'):  # MALNET_LDP_PATCH
+        from malnet_loader import load_data_ldp
+        return load_data_ldp(dataset, degree_as_tag)
     if dataset in ["MUTAG", "COLLAB", "bitcoin", "twitter", "IMDBMULTI", "IMDBBINARY", "REDDITBINARY", "REDDITMULTI5K", "PTC"]:
         graphs, num_classes, _ = load_data(dataset, degree_as_tag)
     else:
